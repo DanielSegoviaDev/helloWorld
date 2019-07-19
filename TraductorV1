@@ -1,0 +1,193 @@
+/*   JAVA TRADUCTOR WITH GOOGLE API
+FIRST VERSION OF PROGRAM
+FIRST FREELANCE PROJECT
+
+*/
+package vista;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.google.api.GoogleAPI;
+import com.google.api.GoogleAPIException;
+import com.google.api.translate.*;
+
+
+import java.awt.Cursor;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
+public class Traductor extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textoEspañol;
+	private JTextField textoIngles;
+	private JTextField textoItaliano;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Traductor frame = new Traductor();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Traductor() {
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		setTitle("TRADUCTOR VANINA V 1.0");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setResizable(false);	
+		setLocationRelativeTo(null);
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		textoEspañol = new JTextField();
+		textoEspañol.setBounds(29, 48, 248, 20);
+		contentPane.add(textoEspañol);
+		textoEspañol.setColumns(10);
+		
+		JLabel lblEspañol = new JLabel("TEXTO EN ESPA\u00D1OL:");
+		lblEspañol.setFont(new Font("Swis721 BT", Font.BOLD, 12));
+		lblEspañol.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEspañol.setBounds(29, 24, 134, 20);
+		contentPane.add(lblEspañol);
+		
+		JButton btnTraducirEsp = new JButton("TRADUCIR");
+		btnTraducirEsp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GoogleAPI.setHttpReferrer("http://code.google.com/apis/language/translate/v2/getting_started.html");
+		           GoogleAPI.setKey("AIzaSyDhwlBP6OcjjvPqtBzS6Ux1rw8BQE3C5DA");
+		
+			
+				String textoOriginal = textoEspañol.getText();
+				try {
+					
+					GoogleAPI.validateReferrer();
+					String textoTraducidoEng = Translate.DEFAULT.execute(textoOriginal, Language.SPANISH, Language.ENGLISH);
+					String textoTraducidoIt = Translate.DEFAULT.execute(textoOriginal, Language.SPANISH, Language.ITALIAN);
+					textoIngles.setText(textoTraducidoEng);
+					textoItaliano.setText(textoTraducidoIt);
+				} catch (GoogleAPIException e) {
+					
+					e.printStackTrace();
+				} catch (Exception e) {
+			
+					e.printStackTrace();
+				}
+				
+				
+			}
+		});
+		btnTraducirEsp.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnTraducirEsp.setBounds(302, 47, 103, 23);
+		contentPane.add(btnTraducirEsp);
+		
+		JLabel lblNewLabel = new JLabel("TEXTO EN INGLES:");
+		lblNewLabel.setFont(new Font("Swis721 Lt BT", Font.BOLD, 12));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(29, 92, 134, 20);
+		contentPane.add(lblNewLabel);
+		
+		textoIngles = new JTextField();
+		textoIngles.setBounds(29, 114, 248, 20);
+		contentPane.add(textoIngles);
+		textoIngles.setColumns(10);
+		
+		JButton btnTraducirIng = new JButton("TRADUCIR");
+		btnTraducirIng.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				GoogleAPI.setHttpReferrer("http://code.google.com/apis/language/translate/v2/getting_started.html");
+		           GoogleAPI.setKey("AIzaSyDhwlBP6OcjjvPqtBzS6Ux1rw8BQE3C5DA");
+		
+			
+				String textoOriginal = textoIngles.getText();
+				try {
+					
+					GoogleAPI.validateReferrer();
+					String textoTraducidoEsp = Translate.DEFAULT.execute(textoOriginal, Language.ENGLISH, Language.SPANISH);
+					String textoTraducidoIt = Translate.DEFAULT.execute(textoOriginal, Language.ENGLISH, Language.ITALIAN);
+					textoEspañol.setText(textoTraducidoEsp);
+					textoItaliano.setText(textoTraducidoIt);
+				} catch (GoogleAPIException e) {
+					
+					e.printStackTrace();
+				} catch (Exception e) {
+			
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		btnTraducirIng.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnTraducirIng.setBounds(302, 113, 103, 23);
+		contentPane.add(btnTraducirIng);
+		
+		JLabel lblTextoEnLatin = new JLabel("TEXTO EN ITALIANO:");
+		lblTextoEnLatin.setFont(new Font("Swis721 Lt BT", Font.BOLD, 12));
+		lblTextoEnLatin.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTextoEnLatin.setBounds(29, 157, 134, 20);
+		contentPane.add(lblTextoEnLatin);
+		
+		textoItaliano = new JTextField();
+		textoItaliano.setBounds(29, 178, 248, 20);
+		contentPane.add(textoItaliano);
+		textoItaliano.setColumns(10);
+		
+		JButton btnNewButton = new JButton("TRADUCIR");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GoogleAPI.setHttpReferrer("http://code.google.com/apis/language/translate/v2/getting_started.html");
+		           GoogleAPI.setKey("AIzaSyDhwlBP6OcjjvPqtBzS6Ux1rw8BQE3C5DA");
+		
+			
+				String textoOriginal = textoItaliano.getText();
+				try {
+					
+					GoogleAPI.validateReferrer();
+					String textoTraducidoEsp = Translate.DEFAULT.execute(textoOriginal, Language.ITALIAN, Language.SPANISH);
+					String textoTraducidoIng = Translate.DEFAULT.execute(textoOriginal, Language.ITALIAN, Language.ENGLISH);
+					textoEspañol.setText(textoTraducidoEsp);
+					textoIngles.setText(textoTraducidoIng);
+				} catch (GoogleAPIException e1) {
+					
+					e1.printStackTrace();
+				} catch (Exception f) {
+			
+					f.printStackTrace();
+				}
+				
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewButton.setBounds(302, 177, 103, 23);
+		contentPane.add(btnNewButton);
+	}
+}
